@@ -2,7 +2,7 @@ from aws_cdk import (
     Stack,
     RemovalPolicy,
     Duration,
-    aws_lambda as _lambda,
+    aws_lambda as lambda_,
     aws_apigateway as apigateway,
     aws_dynamodb as dynamodb,
     aws_s3 as s3
@@ -30,20 +30,21 @@ class SabermineBackendStack(Stack):
 
         lambda_function = PythonFunction(
             self, "SabermineBackendLambda",
-            entry="../sabermine-backend/lambda_function",
+            entry="../sabermine-backend/sabermine_backend",
+            index='index.py',
             handler="handler",
-            runtime=_lambda.Runtime.PYTHON_3_12,
+            runtime=lambda_.Runtime.PYTHON_3_12,
             environment={
                 "DYNAMODB_TABLE": table.table_name,
                 "S3_BUCKET": bucket.bucket_name
             },
-            timeout=Duration.seconds(10)
+            timeout=Duration.seconds(10),
         )
 
         table.grant_read_write_data(lambda_function)
         bucket.grant_read_write(lambda_function)
 
-        api = apigateway.LambdaRestApi(
+        apigateway.LambdaRestApi(
             self, "SabermineBackendEndpoint",
             handler=lambda_function,
         )
