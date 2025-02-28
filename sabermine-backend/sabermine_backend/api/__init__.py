@@ -21,6 +21,18 @@ class URLString(BaseModel):
     url: HttpUrl
 
 
+class ShortUrl(BaseModel):
+    original_url: HttpUrl
+    short_code: str
+    short_url: HttpUrl
+
+
+class AllShortUrlsResponse(BaseModel):
+    count: int
+    short_urls: list[ShortUrl]
+    next_key: str | None
+
+
 @app.get("/api/")
 def ready() -> dict[str, str]:
     """Check to confirm if the service is ready."""
@@ -54,7 +66,7 @@ def upload(file: UploadFile = File(...)) -> dict[str, str]:
 def get_all_short_urls(
     limit: int = Query(10, ge=1, le=100),
     last_evaluated_key: str = None
-):
+) -> AllShortUrlsResponse:
     """
     Retrieve all short URLs from the DynamoDB table.
     """

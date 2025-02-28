@@ -7,7 +7,7 @@ from fastapi import File
 AWS_REGION = os.getenv("AWS_REGION", "eu-west-1")
 DYNAMODB_TABLE = os.getenv("DYNAMODB_TABLE", "ShortenedURLs")
 S3_BUCKET = os.getenv("S3_BUCKET", "sabermine")
-BASE_URL = os.getenv("BASE_URL", "https://5bqey8zso9.execute-api.eu-west-1.amazonaws.com/prod/")
+BASE_URL = os.getenv("BASE_URL", "https://5bqey8zso9.execute-api.eu-west-1.amazonaws.com/prod")
 
 
 def url_from_code(short_code: str):
@@ -65,7 +65,7 @@ def upload_file(file: File) -> str:
     return file_url
 
 
-def get_all_short_urls(limit: int = 10, last_evaluated_key: str = None):
+def get_all_short_urls(limit: int = 10, last_evaluated_key: str = None) -> dict[str, int | str]:
     scan_kwargs = {"Limit": limit}
     if last_evaluated_key:
         scan_kwargs["ExclusiveStartKey"] = {"short_code": last_evaluated_key}
