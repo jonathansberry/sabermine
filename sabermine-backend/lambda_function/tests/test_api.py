@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from sabermine_backend.index import app
+from sabermine_backend.api import app
 from io import BytesIO
 
 client = TestClient(app)

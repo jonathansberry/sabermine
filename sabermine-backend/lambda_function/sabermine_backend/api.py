@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, File, UploadFile, Query
-from mangum import Mangum
+
 import string
 from pydantic import BaseModel, HttpUrl
 from . import logic
@@ -70,6 +70,3 @@ def redirect(short_code: str, response_class=RedirectResponse):
     if not original_url:
         raise HTTPException(status_code=404, detail="Short code not found")
     return RedirectResponse(original_url)
-
-
-handler = Mangum(app)
