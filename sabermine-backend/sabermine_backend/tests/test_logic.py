@@ -118,6 +118,13 @@ class TestUploadFile():
 
 class TestGetAllShortUrls:
 
+    def test_get_all_short_urls(self, dynamodb_mock):
+        for i in range(15):
+            dynamodb_mock.put_item(Item={"short_code": f"code{i}", "original_url": f"https://example{i}.com"})
+        result = logic.get_all_short_urls()
+        for item in result['short_urls']:
+            assert item['short_url'].startswith(logic.BASE_URL)
+
     def test_get_all_short_urls_default_limit(self, dynamodb_mock):
         for i in range(15):
             dynamodb_mock.put_item(Item={"short_code": f"code{i}", "original_url": f"https://example{i}.com"})

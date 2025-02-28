@@ -10,11 +10,15 @@ S3_BUCKET = os.getenv("S3_BUCKET", "sabermine")
 BASE_URL = os.getenv("BASE_URL", "https://5bqey8zso9.execute-api.eu-west-1.amazonaws.com/prod/")
 
 
+def url_from_code(short_code: str):
+    return f"{BASE_URL}/{short_code}"
+
+
 def shorten_url(original_url: str) -> str:
     short_code = generate_unique_code()
     table = get_dynamodb_table()
     table.put_item(Item={"short_code": short_code, "original_url": original_url})
-    return f"{BASE_URL}/{short_code}"
+    return url_from_code(short_code)
 
 
 def retrieve_url(short_code: str) -> str | None:
@@ -67,7 +71,10 @@ def get_all_short_urls(limit: int = 10, last_evaluated_key: str = None):
         scan_kwargs["ExclusiveStartKey"] = {"short_code": last_evaluated_key}
     table = get_dynamodb_table()
     response = table.scan(**scan_kwargs)
-    urls = response.get("Items", [])
+    items = response.get("Items", [])
+    urls = [
+        {**item, 'short_url': url_from_code(item['short_code'])} for item in items
+    ]
     next_key = response.get("LastEvaluatedKey")
     return {
         "count": len(urls),
