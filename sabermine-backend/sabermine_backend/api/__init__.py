@@ -1,14 +1,20 @@
 from fastapi import FastAPI, HTTPException, File, UploadFile, Query
-
+from fastapi.middleware.cors import CORSMiddleware
 import string
 from pydantic import BaseModel, HttpUrl
 from . import logic
 from starlette.responses import RedirectResponse
 
+BASE62_ALPHABET = string.digits + string.ascii_letters
 
 app = FastAPI()
-
-BASE62_ALPHABET = string.digits + string.ascii_letters
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_methods=["*"],
+    allow_credentials=True,
+    allow_headers=["*"]
+)
 
 
 class URLString(BaseModel):

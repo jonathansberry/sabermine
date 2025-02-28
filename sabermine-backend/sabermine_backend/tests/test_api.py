@@ -5,6 +5,23 @@ from io import BytesIO
 client = TestClient(app)
 
 
+class TestAPI():
+
+    def test_cors_blocked_origin(self):
+        response = client.get("/api/", headers={
+            "Origin": "http://blocked.com",
+        })
+        assert response.status_code == 200
+        assert not response.headers.get("access-control-allow-origin")
+
+    def test_cors_allowed_origin(self):
+        response = client.get("/api/", headers={
+            "Origin": "http://localhost:3000"
+        })
+        assert response.status_code == 200
+        assert response.headers["access-control-allow-origin"] == "http://localhost:3000"
+
+
 class TestReady():
 
     def test_ready(self):

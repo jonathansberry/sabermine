@@ -26,7 +26,7 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [[tool.poetry-auto-export.exports]]
-output = "sabermine_backend/requirements.txt"
+output = "sabermind_backend/requirements.txt"
 without_hashes = true
 without = ["dev"]
 

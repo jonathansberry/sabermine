@@ -1,5 +1,5 @@
 import string
-import sabermine_backend.logic as logic
+import sabermine_backend.api.logic as logic
 from unittest.mock import patch
 from fastapi import UploadFile
 from io import BytesIO
@@ -51,7 +51,7 @@ class TestGenerateUniqueCode:
         assert code not in existing_codes
         assert logic.is_code_unique(code) is True
 
-    @patch('sabermine_backend.logic.generate_short_code')
+    @patch('sabermine_backend.api.logic.generate_short_code')
     def test_generate_unique_code_mocked(self, mock_generate_short_code, dynamodb_mock):
         existing_codes = ["code1", "code2", "code3"]
         for code in existing_codes:

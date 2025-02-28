@@ -1,7 +1,7 @@
 import pytest
 from moto import mock_aws
 import boto3
-from sabermine_backend.logic import DYNAMODB_TABLE, AWS_REGION, S3_BUCKET
+from sabermine_backend.api.logic import DYNAMODB_TABLE, AWS_REGION, S3_BUCKET
 
 
 @pytest.fixture
