@@ -9,9 +9,9 @@ To get going with this:
    pipx install poetry
    ```
 
-2. Install the poetry plugin "poetry-auto-export".  Lambda requires a requirements.txt file and this plugin will automatically keep that file in sync with your poetry commands.
+2. Install the poetry plugins "poetry-auto-export".  Lambda requires a requirements.txt file and poetry-auto-export plugin will automatically keep that file in sync with your poetry commands. The poetry-dotenv-plugin helps with loading ENV VARs into the poetry venv.
    ```
-   poetry self add poetry-auto-export
+   poetry self add poetry-auto-export poetry-dotenv-plugin
    ```
 
 3. Sync the poetry package - this will ensure you install the tested dependancy versions instead of the latest dependancy versions which may break things.
