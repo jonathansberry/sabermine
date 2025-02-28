@@ -1,0 +1,25 @@
+[project]
+name = "sabermine-infrastructure"
+version = "0.1.0"
+description = "Sabermine technical exercise infrastructure"
+authors = [
+    {name = "Jonathan S Berry",email = "jonathan.s.berry@gmail.com"}
+]
+requires-python = "~=3.8"
+dependencies = [
+    "constructs (>=10.0.0,<11.0.0)",
+    "aws-cdk-lib (>=2.181.0,<3.0.0)",
+    "aws-cdk-aws-lambda-python-alpha (>=2.181.0a0,<3.0.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+
+
